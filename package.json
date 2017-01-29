@@ -9,6 +9,9 @@
   "author": "Kausthub Poondi",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.16.0",
+    "ejs": "^2.5.5",
+    "express": "^4.13.3",
     "twit": "^2.2.5"
   }
 }
