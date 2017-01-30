@@ -16,6 +16,14 @@ var index = require('./index');
 
 var t = new twit(index);
 
+//Globals variables
+var hours;
+var min;
+var pace_hrs;
+var pace_min;
+var pace_sec;
+var miles;
+
 //Gets the homepage 
 app.get('/', function(req, res){
 	res.render('home');
@@ -23,23 +31,48 @@ app.get('/', function(req, res){
 
 //Gets the necessary information from the home page
 app.post('/', function(req, res) {	
-	var hours = req.body.hrs;
-	var min = req.body.min;
-	var sec = req.body.sec;
-	var pace_hrs = req.body.pace_hrs;
-	var pace_min = req.body.pace_min;
-	var pace_sec = req.body.pace_sec;
-	var miles = req.body.distance;
+	hours = req.body.hrs;
+	min = req.body.min;
+	sec = req.body.sec;
+	pace_hrs = req.body.pace_hrs;
+	pace_min = parseInt(req.body.pace_min) + (parseInt(pace_hrs) * 60);
+	pace_sec = req.body.pace_sec;
+	miles = req.body.distance;
+	
+	format();
 
+	var time_status = "Total time: " + hours + ':' + min + ':' + sec + '\n';
+	var distance_status = "Total distance: " + miles + " miles\n";
+	var pace_status = "Pace: " + pace_min + ':' + pace_sec + " (min/mile)\n";
+	var hashtags = "#running #runculture #health";
 
 	var params = {
-		status: miles
+		status: time_status + distance_status + pace_status + hashtags
 	}
 
 	//Posts to Twitter
 	t.post('statuses/update', params, tweeted);
 
 });
+
+function format() {	
+
+	if(parseInt(hours) < 10) {
+		hours = "0" + hours;
+	}
+	else if(hours == "") {
+		hours = "00";
+	}
+
+	if(parseInt(min) < 10) {
+		min = "0" + min;
+	}
+
+	if(parseInt(sec) < 10) {
+		sec = "0" + sec;
+	}
+
+}
 
 //Callback for POST
 function tweeted(err, data, response) {

@@ -17,18 +17,9 @@ img {
 	height: 25px;
 }
 
-#myList {
-	background-color: #1dcaff;
-	color: white;
-}
-
-#form {
-	overflow: hidden;
-    white-space: nowrap;
-}
-
 .box {
 	width: 35px;
+	text-align: right;
 }
 
 .error {
@@ -50,7 +41,6 @@ img {
 	width: 75px;
 	height: 25px;
 }
-
 
 
 
