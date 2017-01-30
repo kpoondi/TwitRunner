@@ -1,3 +1,4 @@
+//Setup of all packages needed and the view engine
 var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
@@ -15,33 +16,40 @@ var index = require('./index');
 
 var t = new twit(index);
 
-function tweeted(err, data, response) {
-	if(err) {
-		console.log("error");
-	}
-	else {
-		console.log("worked!");
-	}
-}
-
+//Gets the homepage 
 app.get('/', function(req, res){
 	res.render('home');
 });
 
-app.post('/', function(req, res){	
-	var temp = req.body.distance;
-	console.log(temp);
+//Gets the necessary information from the home page
+app.post('/', function(req, res) {	
+	var hours = req.body.hrs;
+	var min = req.body.min;
+	var sec = req.body.sec;
+	var pace_hrs = req.body.pace_hrs;
+	var pace_min = req.body.pace_min;
+	var pace_sec = req.body.pace_sec;
+	var miles = req.body.distance;
+
+
+	var params = {
+		status: miles
+	}
+
+	//Posts to Twitter
+	t.post('statuses/update', params, tweeted);
+
 });
 
-var info = {
-
+//Callback for POST
+function tweeted(err, data, response) {
+	if(err) {
+		console.log(err);
+	}
+	else {
+		console.log("Worked");
+	}
 }
-
-var params = {
-	status: "hello world!"
-}
-
-//t.post('statuses/update', params, tweeted);
 
 app.listen(3000, function() {
 	console.log("Listening on port 3000");

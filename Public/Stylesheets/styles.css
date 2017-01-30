@@ -38,6 +38,7 @@ img {
 .button {
 	background-color: #1dcaff;
 	color: beige;
+	border-radius: 25px;
 }
 
 #reset {
@@ -46,8 +47,8 @@ img {
 }
 
 #post {
-	width: 70px;
-	height: 35px;
+	width: 75px;
+	height: 25px;
 }
 
 

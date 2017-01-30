@@ -1,51 +1,35 @@
 <!DOCTYPE html>
 <html>
-	<head style = "white-space:nowrap;"> 
+	<head> 
 		<title>TwitRunner</title> 
-		<!-- <img src = "https://g.twimg.com/blog/s200/twitter-bird.png"/> -->
 		<link rel="stylesheet" type="text/css" href="/stylesheets/styles.css">
 	</head>	
 		<h2 align = "center" id = "heading">TwitRunner</h2>
 	<body>
-		<p id = "instruct"><b>Instructions: </b>In the boxes below, enter your total distance and mileage. Then, press the CALCULATE PACE button to calculate your pace! Press RESET to enter again. Press POST to automatically post
-		to your Twitter account!
+		<p id = "instruct"><b>Instructions: </b>In the boxes below, enter your total distance and mileage. Then, press the CALCULATE PACE button to calculate your pace! Once a valid pace is calculated, the POST button will appear 
+		to post the information to your Twitter account!
 		</p>		
 
-		<form id = "miles" action= "/" method="post"> 
+		<form id = "general" action= "/" method="post"> 
 		<p>Enter your total mileage:
-		<input name = "distance" type = "text" class = "box"/> miles		
-		<button class = "button" id = "post" type = "submit">POST</button></form> 
-		<br/>OR<br/> 
-		Choose from one of these options: 
-
-		<form>
-		<select id = "myList">
-			<option>Click to choose:</option>
-			<option> Marathon</option>
-			<option>Half-Marathon</option>
-			<option>5K</option>
-			<option>10K</option>
-			<option>8K</option>
-		</select>
-		</form>
-		</p>
-
-		<form id = "time">
+		<input name = "distance" type = "text" class = "box"/> miles
+		
 		<p>Enter your total time:
 
 		<input class = "box" name = "hrs" type = "text"/> hours <input class = "box" name = "min" type = "text"/> min <input class = "box" name = "sec" type = "text"/> seconds
 		</p>
-		</form>
-
-		<button class = "button" id = "calculate">CALCULATE PACE
-		</button>
 
 		<p>Pace: 
 
-	    <input class = "box" id = "pace_hrs" readonly/> hours  <input class = "box" id = "pace_min" readonly/> min  <input class = "box" id = "pace_sec" readonly/> seconds per mile
+	    <input class = "box" id = "pace_hrs" name = "pace_hrs" readonly/> hours  <input class = "box" id = "pace_min" name = "pace_min" readonly/> min  <input class = "box" id = "pace_sec" name = "pace_sec" readonly/> seconds per mile
 		</p>
 
-		<button class = "button" id = "reset">RESET</button>
+		<button type = "button" class = "button" id = "reset">RESET</button>
+		<button type = "button" class = "button" id = "calculate">CALCULATE PACE</button>
+		<button class = "button" id = "post" action = "post" type = "submit" style="display:none;">POST</button>
+		</form>
+
 		<script src = "/javascript/pace.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 	</body>
 </html>

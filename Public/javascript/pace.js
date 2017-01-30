@@ -1,52 +1,29 @@
 //Takes the needed elements from html file
 var calc = document.getElementById("calculate");
 var resetter = document.getElementById("reset");
-var time = document.getElementById("time");
-var distance = document.getElementById("miles");
-var dropdown = document.getElementById("myList");
-var dropArr = {
-	"Marathon": 26.2,
-	"Half-Marathon": 13.1,
-	"5K": 3.1,
-	"10K": 6.2,
-	"8K": 4.97
-}
-
-function whichDistance() {
-	if (dropdown.options[dropdown.selectedIndex].text == "Click to choose:") {
-		clear_error();
-	}
-	else {
-		distance.elements["distance"].value = dropArr[dropdown.options[dropdown.selectedIndex].text];
-		clear_error();
-	}
-}
+var form = document.getElementById("general");
 
 //Resets all the input boxes 
 function clear_error() {
-	for (var i = 0; i < time.length; i++) {
-		time[i].classList.remove("error");
-	}
-
-	for (var i = 0; i < miles.length; i++) {
-		miles[i].classList.remove("error");
+	for (var i = 0; i < form.length; i++) {
+		form[i].classList.remove("error");
 	}
 	getInfo();
 }
 
 //After a click is made, acquires the necessary information from input blocks
 function getInfo() {
-	var mile = distance.elements["distance"].value;
-	var hour = time.elements["hrs"].value;
-	var min = time.elements["min"].value;
-	var sec = time.elements["sec"].value;
+	var mile = form.elements["distance"].value;
+	var hour = form.elements["hrs"].value;
+	var min = form.elements["min"].value;
+	var sec = form.elements["sec"].value;
 	var valid = checkInput (mile, hour, min, sec);
-
 	if (valid) {
 		makePace(mile, hour, min, sec);
+		clear_error();
 	}
 	else {
-		calc.addEventListener("click", whichDistance);
+		calc.addEventListener("click", getInfo);
 	}
 }
 
@@ -56,25 +33,25 @@ function checkInput(mile, hour, min, sec)  {
 	var error_count = 0;
 
 	if (isNaN(parseInt(mile))) {
-		distance.elements["distance"].classList.add("error");
+		form.elements["distance"].classList.add("error");
 		error += "Invalid Mileage: Enter numbers only\n";
 		error_count++;
 	}
 
-	if (isNaN(hour)) {
-		time.elements["hrs"].classList.add("error");
+	if (isNaN(parseInt(hour)) && hour != "") {
+		form.elements["hrs"].classList.add("error");
 		error += "Invalid Hour: Enter numbers only\n";
 		error_count++;
 	}
 
 	if (isNaN(parseInt(min)) || 60 <= min || min < 0){
-		time.elements["min"].classList.add("error");
+		form.elements["min"].classList.add("error");
 		error += "Invalid Minutes: Enter numbers between 0 and 59 only\n";
 		error_count++;
 	}
 
 	if (isNaN(parseInt(sec)) ||  60 <= sec || sec < 0) {
-		time.elements["sec"].classList.add("error");
+		form.elements["sec"].classList.add("error");
 		error += "Invalid Seconds: Enter numbers between 0 and 59 only\n";
 		error_count++;
 	}
@@ -126,24 +103,25 @@ function paceOutput (hour_pace, min_pace, sec_pace) {
 	document.getElementById("pace_hrs").value = hour_pace;
 	document.getElementById("pace_min").value = min_pace;
 	document.getElementById("pace_sec").value = sec_pace;
+	$('#post').show();
 }
 
 //resets the entire page
 function reset() {
 	
- 	dropdown.options.selectedIndex = 0;
+ 	//dropdown.options.selectedIndex = 0;
 	document.getElementById("pace_hrs").value = "";
 	document.getElementById("pace_min").value = "";
 	document.getElementById("pace_sec").value = "";
-	distance.elements["distance"].value = "";
-	time.elements["hrs"].value = "";
-	time.elements["min"].value = "";
-	time.elements["sec"].value = "";
+	form.elements["distance"].value = "";
+	form.elements["hrs"].value = "";
+	form.elements["min"].value = "";
+	form.elements["sec"].value = "";
 }
 
 //main
 function main() {
-	calc.addEventListener("click", whichDistance);
+	calc.addEventListener("click", getInfo);
 	resetter.addEventListener("click", reset);
 }
 
