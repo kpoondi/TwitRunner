@@ -72,6 +72,10 @@ function format() {
 		sec = "0" + sec;
 	}
 
+	if(parseInt(pace_min) < 10) {
+		pace_min = "0" + pace_min;
+	}
+
 }
 
 //Callback for POST
